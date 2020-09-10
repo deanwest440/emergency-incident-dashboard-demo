@@ -6,3 +6,9 @@ body {
   text-align: center;
   margin: auto;
 }
+
+#map {
+  margin: 20px auto;
+  width: 95%;
+  height: 800px;
+}
