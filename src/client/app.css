@@ -27,11 +27,14 @@ body {
   min-height: 600px;
   background-color: #f9f9f9;
 }
-.map {
+
+.map-container .leaflet-container {
   border: 2px solid black;
+  min-height: 600px;
   flex: 7.5;
 }
-.list {
+
+.map-container .list {
   border: 2px solid black;
   flex: 2.5;
 }
