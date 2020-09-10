@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Map from './components/Map/Map';
+import List from './components/List/List';
+
 import './app.css';
 
 export default class App extends Component {
@@ -13,14 +16,13 @@ export default class App extends Component {
   }
 
   render() {
-    const { username } = this.state;
     return (
       <div>
-        {username ? (
-          <h1>{`Hello ${username}`}</h1>
-        ) : (
-          <h1>Loading.. please wait!</h1>
-        )}
+        <h1>Fire Department Incidents</h1>
+        <section className="map-container">
+          <Map />
+          <List />
+        </section>
       </div>
     );
   }
