@@ -12,6 +12,8 @@ export default class App extends Component {
     fetch('/api/incident/F01705150050')
       .then(res => res.json())
       .then(incident => {
+        console.log('\n Full incident: ');
+        console.log(incident);
         this.setState({
           incident,
         });
@@ -19,8 +21,11 @@ export default class App extends Component {
   }
 
   render() {
-    const mapData = lodashGet(this.state, ['incident', 'mapData']);
-    const summaryData = lodashGet(this.state, ['incident', 'summaryData']);
+    const mapData = lodashGet(this.state, ['incident', 'mapData'], {});
+    const summaryData = lodashGet(this.state, ['incident', 'summaryData'], {});
+
+    console.log('\n Map Data: ');
+    console.log(mapData);
 
     return (
       <div className="app">

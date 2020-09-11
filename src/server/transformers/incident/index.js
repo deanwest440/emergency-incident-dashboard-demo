@@ -1,4 +1,3 @@
-const pick = require('lodash/pick');
 const moment = require('moment');
 const addCoordinates = require('./add-coordinates');
 
@@ -23,7 +22,7 @@ const getMapMarkers = incident => {
     longitude: addressWithCoords.longitude,
     details: {
       title: `${common_place_name} ${address_line_1}, ${name}, ${city}, ${state}`,
-      message: 'This is the message that goes with the address marker',
+      message: '',
     },
   };
 
@@ -33,12 +32,16 @@ const getMapMarkers = incident => {
       longitude: app.longitude,
       details: {
         title: `Unit ${app.unit_id} (${app.unit_type}) - Station ${app.station}`,
-        message: `You're the man now dawg.`,
+        message: ``,
       },
     };
   });
 
-  return [].concat(addressMarker, apparatusMarkers);
+  return {
+    // Conceivably, there could be multiple incident locations
+    incidents: [addressMarker],
+    responders: apparatusMarkers,
+  };
 };
 
 const dateFormat = 'MMM DD, YYYY - hh:mm:ssa';
@@ -82,7 +85,7 @@ const transformDescription = ({
     first_unit_arrived: moment(first_unit_arrived).format(dateFormat),
     first_unit_enroute_minutes,
     first_unit_arrived_minutes,
-    // comments,
+    comments,
   };
 };
 

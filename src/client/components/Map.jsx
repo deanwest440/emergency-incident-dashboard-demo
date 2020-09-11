@@ -9,39 +9,47 @@ import {
   LayerGroup,
 } from 'react-leaflet';
 
-function IncidentMap({ markers, className }) {
-  // Center the Map at the Average Lat/Lng of all markers
-  const averageMarkerPosition = markers
+const getAverageCoords = markerList =>
+  markerList
     .reduce(
       (acc, m) => {
         return [acc[0] + m.latitude, acc[1] + m.longitude];
       },
       [0, 0],
     )
-    .map(coord => coord / markers.length);
+    .map(coord => coord / markerList.length);
 
-  const markerDisplay = markers.map(m => {
-    return (
-      <Marker
-        key={[m.latitude, m.longitude] + Math.random()}
-        position={[m.latitude, m.longitude]}
-      >
-        <Popup>
-          <h2>{m.details.title}</h2>
-          <p>{m.details.message}</p>
-        </Popup>
-      </Marker>
-    );
-  });
+const getMarkerDisplay = markerList =>
+  markerList.map(m => (
+    <Marker
+      key={[m.latitude, m.longitude] + Math.random()}
+      position={[m.latitude, m.longitude]}
+    >
+      <Popup>
+        <h2>{m.details.title}</h2>
+        <p>{m.details.message}</p>
+      </Popup>
+    </Marker>
+  ));
+
+function IncidentMap({ markers: { incidents, responders }, className }) {
+  // Center the Map at the Average Lat/Lng of all markers
+  const averageIncidentCoords = getAverageCoords(incidents);
+  const incidentMarkers = getMarkerDisplay(incidents);
+  const responderMarkers = getMarkerDisplay(responders);
+
   return (
     <Map
       className={`component-map ${className}`}
-      center={averageMarkerPosition}
+      center={averageIncidentCoords}
       zoom={12}
     >
       <LayersControl position="topright">
-        <LayersControl.Overlay name="Points of interest" checked>
-          <LayerGroup>{markerDisplay}</LayerGroup>
+        <LayersControl.Overlay name="Incident Locations" checked>
+          <LayerGroup>{incidentMarkers}</LayerGroup>
+        </LayersControl.Overlay>
+        <LayersControl.Overlay name="Responders" checked>
+          <LayerGroup>{responderMarkers}</LayerGroup>
         </LayersControl.Overlay>
       </LayersControl>
       <TileLayer
@@ -52,18 +60,35 @@ function IncidentMap({ markers, className }) {
   );
 }
 
+const markerShape = PropTypes.shape({
+  latitude: PropTypes.number,
+  longitude: PropTypes.number,
+  details: PropTypes.shape({
+    title: PropTypes.string,
+    message: PropTypes.string,
+  }),
+});
+
 IncidentMap.propTypes = {
-  markers: PropTypes.arrayOf(PropTypes.object),
+  markers: PropTypes.shape({
+    incidents: PropTypes.arrayOf(markerShape),
+    responders: PropTypes.arrayOf(markerShape),
+  }),
+  className: PropTypes.string,
+};
+
+const defaultMarker = {
+  latitude: 0,
+  longitude: 0,
+  details: {},
 };
 
 IncidentMap.defaultProps = {
-  markers: [
-    {
-      latitude: 0,
-      longitude: 0,
-      details: {},
-    },
-  ],
+  className: '',
+  markers: {
+    incidents: [defaultMarker],
+    responders: [defaultMarker],
+  },
 };
 
 export default IncidentMap;
