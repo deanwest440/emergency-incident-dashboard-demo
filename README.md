@@ -2,6 +2,8 @@
 
 An application that displays key information regarding 911 emergency incidents, including geospatial data for incidents and responders.
 
+![Screenshot](public/img/screenshot.png)
+
 ## Quick Start
 
 ```bash
@@ -16,12 +18,12 @@ Navigate to http://localhost:3000
 
 So much. Off the top of my head:
 
-General:
+**General**:
 
 - Tests! I would want as close to 100% test coverage as I could get. Mainly because I like to sleep at night.
 - General organization: Given enough time, I like to organize files and functions into small, reusable, composable, (ideally generalized), documented, logical, testable units. (You know, [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy) stuff)
 
-Front End:
+**Front End**:
 
 - Allow the user to select an incident from a list of incidents (rather than passing an ID as a query param)
 - Use Redux for state management (Not as relevant for this demo, which renders a single incident and then doesn't change)
@@ -30,11 +32,11 @@ Front End:
 - Use more interesting and meaningful map icons for incidents and responders. For example, incidents like Fires, Hazmat, and EMS incidents could be represented with flame, haz-mat/biohazard, and EMS (star of life) icons. Similarly, responding units could have different icons for different types.
 - Generally, make as much use of reusable components as possible. The `IncidentMap` component for example, ideally should just be a `Map` that just displays generic map data.
 
-Back End:
+**Back End**:
 
 - Most critically, I'd enrich the incident data with weather data!
 - Use an actual database instead of a pretend one
 - Depending on how deep we need to go with enriching incident data, there could be a whole network of internal and external services and APIs that our API would coordinate with.
 - Organize routes separate from app startup
 
-**Time Spent**: Approximately X Hours
+**Time Spent**: Approximately 8 Hours
