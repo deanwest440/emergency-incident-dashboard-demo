@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Map from './components/IncidentMap';
 import Table from './components/Table';
 
-import './app.css';
+import './app.scss';
 
 export default class App extends Component {
   state = { username: null };

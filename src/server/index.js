@@ -20,7 +20,7 @@ app.get('/api/incidents', (req, res) => {
 app.get('/api/incident/:id', (req, res) => {
   const incident = db[req.params.id];
   if (!incident) {
-    res.send(404);
+    res.sendStatus(404);
   }
   // Transform the incident before returning. Ordinarily, if there were extensive
   // transformations and augmentations required here, this transformer may aggregate
