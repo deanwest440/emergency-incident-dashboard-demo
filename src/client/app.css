@@ -7,34 +7,9 @@ body {
   margin: auto;
 }
 
-#map {
-  margin: 20px auto;
-  width: 95%;
-  height: 800px;
-}
-
-.map-container {
-  margin: 20px auto;
-  width: 95%;
-  height: 800px;
-
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-}
-.map-container > section {
-  min-height: 600px;
-  background-color: #f9f9f9;
-}
-
 .map-container .leaflet-container {
-  border: 2px solid black;
+  margin: 20px auto;
+  width: 95%;
   min-height: 600px;
   flex: 7.5;
-}
-
-.map-container .list {
-  border: 2px solid black;
-  flex: 2.5;
 }
