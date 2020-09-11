@@ -1,15 +1,12 @@
-h1 {
-  color: #444;
-}
-
-body {
-  text-align: center;
-  margin: auto;
-}
-
-.map-container .leaflet-container {
+#app-container {
   margin: 20px auto;
-  width: 95%;
-  min-height: 600px;
-  flex: 7.5;
+  width: 90%;
+}
+
+.app {
+}
+
+.leaflet-container {
+  min-height: 420px;
+  max-height: 640px;
 }

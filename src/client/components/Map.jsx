@@ -9,17 +9,23 @@ import {
   LayerGroup,
 } from 'react-leaflet';
 
-function IncidentMap(props) {
-  console.log('\n Got some props: ');
-  console.log(props);
+function IncidentMap({ markers, className }) {
+  // Center the Map at the Average Lat/Lng of all markers
+  const averageMarkerPosition = markers
+    .reduce(
+      (acc, m) => {
+        return [acc[0] + m.latitude, acc[1] + m.longitude];
+      },
+      [0, 0],
+    )
+    .map(coord => coord / markers.length);
 
-  const { markers } = props;
-  const position = [37.541885, -77.440624];
   const markerDisplay = markers.map(m => {
-    console.log('\n Processing Marker: ');
-    console.log(m);
     return (
-      <Marker key={Math.random()} position={[m.latitude, m.longitude]}>
+      <Marker
+        key={[m.latitude, m.longitude] + Math.random()}
+        position={[m.latitude, m.longitude]}
+      >
         <Popup>
           <h2>{m.details.title}</h2>
           <p>{m.details.message}</p>
@@ -28,7 +34,11 @@ function IncidentMap(props) {
     );
   });
   return (
-    <Map center={position} zoom={13}>
+    <Map
+      className={`component-map ${className}`}
+      center={averageMarkerPosition}
+      zoom={12}
+    >
       <LayersControl position="topright">
         <LayersControl.Overlay name="Points of interest" checked>
           <LayerGroup>{markerDisplay}</LayerGroup>
@@ -47,7 +57,13 @@ IncidentMap.propTypes = {
 };
 
 IncidentMap.defaultProps = {
-  markers: [],
+  markers: [
+    {
+      latitude: 0,
+      longitude: 0,
+      details: {},
+    },
+  ],
 };
 
 export default IncidentMap;

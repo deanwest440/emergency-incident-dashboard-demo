@@ -82,7 +82,7 @@ const transformDescription = ({
     first_unit_arrived: moment(first_unit_arrived).format(dateFormat),
     first_unit_enroute_minutes,
     first_unit_arrived_minutes,
-    comments,
+    // comments,
   };
 };
 
