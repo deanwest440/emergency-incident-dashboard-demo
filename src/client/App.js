@@ -1,4 +1,5 @@
 import lodashGet from 'lodash/get';
+import qs from 'qs';
 import React, { Component } from 'react';
 import Map from './components/Map';
 import Summary from './components/Details';
@@ -9,11 +10,12 @@ export default class App extends Component {
   state = { username: null };
 
   componentDidMount() {
-    fetch('/api/incident/F01705150050')
+    const { incident: incidentNumber } = qs.parse(window.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    fetch(`/api/incident/${incidentNumber}`)
       .then(res => res.json())
       .then(incident => {
-        console.log('\n Full incident: ');
-        console.log(incident);
         this.setState({
           incident,
         });
@@ -23,20 +25,31 @@ export default class App extends Component {
   render() {
     const mapData = lodashGet(this.state, ['incident', 'mapData'], {});
     const summaryData = lodashGet(this.state, ['incident', 'summaryData'], {});
-
-    console.log('\n Map Data: ');
-    console.log(mapData);
-
+    const { comments, ...tableSummaryData } = summaryData;
     return (
-      <div className="app">
-        <h1 className="is-size-1">
-          Fire Department Incident {summaryData && summaryData.incident_number}
-        </h1>
-        <br />
-        <section className="columns">
-          <Summary className="column is-one-third" {...summaryData} />
-          <Map className="column is-two-thirds" {...mapData} />
-        </section>
+      <div className="app container">
+        <Choose>
+          <When condition={this.state.incident}>
+            <h1 className="is-size-1">
+              Fire Department Incident {summaryData.incident_number}
+            </h1>
+            <br />
+            <section className="columns">
+              <Summary className="column is-one-third" {...tableSummaryData} />
+              <div className="column is-two-thirds">
+                <Map {...mapData} />
+                <br />
+                <h2 className="is-size-4">Notes</h2>
+                <textarea className="is-size-6" readOnly>
+                  {comments}
+                </textarea>
+              </div>
+            </section>
+          </When>
+          <Otherwise>
+            <p>Loading...</p>
+          </Otherwise>
+        </Choose>
       </div>
     );
   }

@@ -6,7 +6,7 @@ function IncidentDetails({ className, ...displayProps }) {
       <td className="column is-two-fifths is-capitalized has-text-weight-semibold">
         {`${k}`.replace(/_/g, ' ')}
       </td>
-      <td className="column">{v.toString()}</td>
+      <td className="column summary-data">{v.toString()}</td>
     </tr>
   ));
 
