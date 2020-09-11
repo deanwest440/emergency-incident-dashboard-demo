@@ -3,11 +3,6 @@
   max-height: 720px;
 }
 
-.summary-data {
-  max-height: 180px;
-  overflow-y: auto;
-}
-
 textarea {
   width: 100%;
   min-height: 160px;

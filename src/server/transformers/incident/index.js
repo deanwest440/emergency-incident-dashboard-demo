@@ -1,38 +1,49 @@
 const moment = require('moment');
+const sortBy = require('lodash/sortBy');
 const addCoordinates = require('./add-coordinates');
 
+const dateFormat = 'MMM DD, YYYY - hh:mm:ssa';
+
 const getMapMarkers = incident => {
-  const { address, apparatus } = incident;
+  const {
+    address,
+    apparatus,
+    description: { type, subtype },
+  } = incident;
 
   // Add lat/lng coordinates from geohashes
   const addressWithCoords = addCoordinates(address);
   const apparatusWithCoords = apparatus.map(addCoordinates);
 
-  const {
-    address_line_1,
-    common_place_name,
-    name,
-    city,
-    state,
-  } = addressWithCoords;
+  const { common_place_name, name, city, state } = addressWithCoords;
 
   // Map Data
   const addressMarker = {
     latitude: addressWithCoords.latitude,
     longitude: addressWithCoords.longitude,
+    color: 'red',
     details: {
-      title: `${common_place_name} ${address_line_1}, ${name}, ${city}, ${state}`,
-      message: '',
+      title: `${type} - ${subtype}`,
+      message: `${name}, ${common_place_name}, ${city}, ${state}`,
+      events: [],
     },
   };
 
   const apparatusMarkers = apparatusWithCoords.map(app => {
+    const events = Object.entries(app.unit_status).map(([k, v]) => ({
+      eventName: k,
+      eventTime: moment(v.timestamp).format(dateFormat),
+    }));
+    const sortedEvents = sortBy(events, 'eventTime');
+
     return {
       latitude: app.latitude,
       longitude: app.longitude,
+      color: 'blue',
       details: {
         title: `Unit ${app.unit_id} (${app.unit_type}) - Station ${app.station}`,
-        message: ``,
+        message: '',
+        events: sortedEvents,
       },
     };
   });
@@ -44,8 +55,6 @@ const getMapMarkers = incident => {
   };
 };
 
-const dateFormat = 'MMM DD, YYYY - hh:mm:ssa';
-
 const getDurationInMinutes = (start, end) => {
   const diff = moment(end).diff(start);
   const duration = moment.duration(diff).asMinutes();
@@ -55,14 +64,12 @@ const getDurationInMinutes = (start, end) => {
 const transformDescription = ({
   type,
   subtype,
-  incident_number,
   event_id,
   event_opened,
   event_closed,
   first_unit_dispatched,
   first_unit_enroute,
   first_unit_arrived,
-  comments,
 }) => {
   const total_event_minutes = getDurationInMinutes(event_opened, event_closed);
   const first_unit_enroute_minutes = getDurationInMinutes(
@@ -75,7 +82,6 @@ const transformDescription = ({
   );
   return {
     incident_type: `${type} - ${subtype}`,
-    incident_number,
     event_id,
     event_opened: moment(event_opened).format(dateFormat),
     event_closed: moment(event_closed).format(dateFormat),
@@ -85,7 +91,6 @@ const transformDescription = ({
     first_unit_arrived: moment(first_unit_arrived).format(dateFormat),
     first_unit_enroute_minutes,
     first_unit_arrived_minutes,
-    comments,
   };
 };
 
@@ -104,15 +109,24 @@ const incidentTransformer = incident => {
   const transformedDescription = transformDescription(description);
   const transformedFireDept = transformFireDeptDetails(fire_department);
 
+  const summaryDetails = Object.entries({
+    ...transformedDescription,
+    ...transformedFireDept,
+  }).map(([name, value]) => ({
+    name,
+    value,
+  }));
+
   return {
     // Map data (markers and their associated details)
-    mapData: {
+    map: {
       markers: getMapMarkers(incident),
     },
     // This is data that's not (necessarily) related to the map
-    summaryData: {
-      ...transformedDescription,
-      ...transformedFireDept,
+    summary: {
+      incident_number: description.incident_number,
+      details: summaryDetails,
+      notes: description.comments,
     },
   };
 };
