@@ -13,7 +13,7 @@ const addCoordinates = obj => {
   };
 };
 
-const getMapMarkers = incident => {
+const getMapMarkers = (incident = {}) => {
   const {
     address,
     apparatus,

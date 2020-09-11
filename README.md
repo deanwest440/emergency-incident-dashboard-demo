@@ -21,6 +21,7 @@ So much. Off the top of my head:
 **General**:
 
 - Tests! I would want as close to 100% test coverage as I could get. Mainly because I like to sleep at night.
+- Ideally, the UI application would be entirely from API(s), which would federate and aggregate relevant data from other systems (like internal micro services)
 - General organization: Given enough time, I like to organize files and functions into small, reusable, composable, (ideally generalized), documented, logical, testable units. (You know, [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy) stuff)
 
 **Front End**:
@@ -39,5 +40,6 @@ So much. Off the top of my head:
 - Use an actual database instead of a pretend one
 - Depending on how deep we need to go with enriching incident data, there could be a whole network of internal and external services and APIs that our API would coordinate with.
 - Organize routes separate from app startup
+- Use ES module imports instead of `require`
 
 **Time Spent**: Approximately 8 Hours
