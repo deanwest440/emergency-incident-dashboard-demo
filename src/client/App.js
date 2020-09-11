@@ -33,7 +33,7 @@ export default class App extends Component {
       <div className="app container">
         <Choose>
           <When condition={this.state.incident}>
-            <h1 className="is-size-2">Fire Department Incident Report</h1>
+            <h1 className="is-size-2">Emergency Incident Report</h1>
             <p className="is-size-5">
               Incident Number: {summary.incident_number}
             </p>
