@@ -14,8 +14,10 @@ Navigate to http://localhost:8080
 
 ## Screenshots
 
+### Zoomed Out
 ![Zoomed-Out Screenshot](public/img/screenshot.png)
 ---
+### Zoomed In, With Weather Conditions
 ![Zoomed-In Screenshot with Weather Conditions](public/img/screenshot-2.png)
 
 
