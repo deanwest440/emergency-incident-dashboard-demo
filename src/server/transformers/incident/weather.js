@@ -31,7 +31,7 @@ const tranformHourlyReport = report => ({
   snow_depth: report.snow || 0,
 });
 
-const getWeatherConditions = async incident => {
+const getWeatherConditions = async (incident = {}) => {
   const {
     description: { event_opened, event_closed },
   } = incident;

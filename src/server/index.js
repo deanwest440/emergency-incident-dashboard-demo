@@ -24,8 +24,7 @@ app.get('/api/incident/:id', async (req, res) => {
   }
   // Transform the incident before returning. Ordinarily, if there were extensive
   // transformations and augmentations required here, this transformer may aggregate
-  // details from multiple micro-services or APIs. For example, we can enrich the
-  // original data with weather data, additional geospatial data, traffic data, etc.
+  // details from multiple micro-services or APIs.
   const transformedIncident = await incidentTransformer(incident);
   res.send(transformedIncident);
 });
