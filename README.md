@@ -2,8 +2,6 @@
 
 An application that displays key information regarding 911 emergency incidents, including weather conditions at the time of the incident and geospatial data for incidents and responders
 
-![Screenshot](public/img/screenshot.png)
-
 ## Quick Start
 
 ```bash
@@ -13,6 +11,13 @@ npm start
 ```
 
 Navigate to http://localhost:8080
+
+## Screenshots
+
+![Zoomed-Out Screenshot](public/img/screenshot.png)
+---
+![Zoomed-In Screenshot with Weather Conditions](public/img/screenshot-2.png)
+
 
 ## What I Would Change, Given More Time
 
