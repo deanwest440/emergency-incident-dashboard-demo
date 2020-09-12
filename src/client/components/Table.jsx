@@ -17,7 +17,7 @@ function Table({ title, rows }) {
     <section>
       <h2 className="is-size-4">{title}</h2>
       <br />
-      <table className="table is-striped">
+      <table className="table is-striped is-fullwidth">
         {/* A thead doesn't necessarily make sense here */}
         <tbody>{detailsDisplay}</tbody>
       </table>

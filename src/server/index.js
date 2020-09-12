@@ -17,7 +17,7 @@ app.get('/api/incidents', (req, res) => {
 });
 
 // Get an individual incient by ID (e.g. F01705150090) or return a 404 if not found
-app.get('/api/incident/:id', (req, res) => {
+app.get('/api/incident/:id', async (req, res) => {
   const incident = db[req.params.id];
   if (!incident) {
     res.sendStatus(404);
@@ -26,10 +26,10 @@ app.get('/api/incident/:id', (req, res) => {
   // transformations and augmentations required here, this transformer may aggregate
   // details from multiple micro-services or APIs. For example, we can enrich the
   // original data with weather data, additional geospatial data, traffic data, etc.
-  const transformedIncident = incidentTransformer(incident);
+  const transformedIncident = await incidentTransformer(incident);
   res.send(transformedIncident);
 });
 
-app.listen(process.env.PORT || 3000, () =>
-  console.log(`Server running on http://localhost:${process.env.PORT || 3000}`),
+app.listen(process.env.PORT || 8080, () =>
+  console.log(`Server running on http://localhost:${process.env.PORT || 8080}`),
 );

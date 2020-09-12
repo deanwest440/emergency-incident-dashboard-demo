@@ -29,6 +29,11 @@ export default class App extends Component {
   render() {
     const mapData = lodashGet(this.state, ['incident', 'map'], {});
     const summary = lodashGet(this.state, ['incident', 'summary'], {});
+    const weather = lodashGet(
+      this.state,
+      ['incident', 'weather_conditions'],
+      {},
+    );
     return (
       <div className="app container">
         <Choose>
@@ -41,6 +46,9 @@ export default class App extends Component {
             <section className="columns">
               <div className="column is-one-third">
                 <Table title="Incident Summary" rows={summary.details} />
+                <br />
+                <br />
+                <Table title="Weather Conditions" rows={weather} />
               </div>
               <div className="column is-two-thirds">
                 <Map {...mapData} />

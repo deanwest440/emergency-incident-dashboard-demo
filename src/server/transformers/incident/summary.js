@@ -1,5 +1,6 @@
 const moment = require('moment');
 const { getDurationInMinutes, dateFormat } = require('./times');
+const { getTableRowsFromObject } = require('../util');
 
 const transformDescription = ({
   type,
@@ -46,13 +47,11 @@ const getSummaryDetails = incident => {
   const description = transformDescription(incident.description);
   const fire_dept = transformFireDeptDetails(incident.fire_department);
 
-  return Object.entries({
+  // Prepare the summary details to be rendered by our <Table /> component.
+  return getTableRowsFromObject({
     ...description,
     ...fire_dept,
-  }).map(([name, value]) => ({
-    name,
-    value,
-  }));
+  });
 };
 
 module.exports = getSummaryDetails;
