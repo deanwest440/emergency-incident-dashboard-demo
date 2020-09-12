@@ -12,7 +12,7 @@ npm run build
 npm start
 ```
 
-Navigate to http://localhost:3000
+Navigate to http://localhost:8080
 
 ## What I Would Change, Given More Time
 
