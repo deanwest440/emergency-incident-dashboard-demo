@@ -12,6 +12,8 @@ npm start
 
 Navigate to http://localhost:8080
 
+**Note**: For the purposes of this demo, the dashboard only displays one incident at a time. The incident ID is supplied as a query parameter. With the current data set, you can switch it between `F01705150050` and `F01705150090`. As noted below, ideally, the user would be able to select the incident they want from a list. 
+
 ## Screenshots
 
 ### Zoomed Out
